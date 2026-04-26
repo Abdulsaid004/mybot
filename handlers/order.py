@@ -1,4 +1,4 @@
-
+from handlers.db import init_db # type: ignore #
 from aiogram import Router, types # type: ignore
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton # type: ignore
 from keyboards.main_kb import buyer_keyboard, seller_keyboard  # type: ignore
@@ -166,6 +166,8 @@ async def handle_buyer_form(message: types.Message):
     if not state:
         return
 
+    await init_db() 
+    
     order_id = await create_order(
         client_id=message.from_user.id,
         description=message.text,
