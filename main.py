@@ -7,7 +7,7 @@ from handlers.db import init_db  # type: ignore
 
 import os
 
-BOT_TOKEN = os.getenv("8099643683:AAHIgF929_5x_DOLXZj3gTXDNd1Zlkc7MNg")
+BOT_TOKEN = "8099643683:AAHIgF929_5x_DOLXZj3gTXDNd1Zlkc7MNg"
  
 
 async def main() -> None:
