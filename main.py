@@ -5,13 +5,15 @@ from keyboards.main_kb import main_keyboard # type: ignore
 from handlers.order import router as order_router  # type: ignore
 from handlers.db import init_db  # type: ignore
 
-TOKEN = "8099643683:AAFvkURV3viUMMyZUoFZowQOe0P3jFO7itA"
+import os
+
+BOT_TOKEN = os.getenv("8099643683:AAHIgF929_5x_DOLXZj3gTXDNd1Zlkc7MNg")
  
 
 async def main() -> None:
     await init_db()
 
-    bot = Bot(token=TOKEN)
+    bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
 
     dp.include_router(order_router)
@@ -35,6 +37,7 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
+    import asyncio
     asyncio.run(main())
 
 
