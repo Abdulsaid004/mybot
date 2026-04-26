@@ -17,6 +17,8 @@ async def main() -> None:
     dp = Dispatcher()
 
     dp.include_router(order_router)
+    
+    await dp.start_polling(bot)
 
     @dp.message(CommandStart())
     async def start(message: types.Message) -> None:

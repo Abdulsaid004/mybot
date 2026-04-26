@@ -1,4 +1,4 @@
-from handlers.db import init_db # type: ignore #
+from handlers.db import create_order # type: ignore #
 from aiogram import Router, types # type: ignore
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton # type: ignore
 from keyboards.main_kb import buyer_keyboard, seller_keyboard  # type: ignore
@@ -14,17 +14,6 @@ REVISION = "revision"
 COMPLETED = "completed"
 CANCELLED = "cancelled"
 
-import aiosqlite  # type: ignore
-from handlers.db import init_db  # type: ignore
-
-async def create_order(client_id: int, description: str, price: int):
-    async with aiosqlite.connect(init_db) as db:
-        cursor = await db.execute("""
-            INSERT INTO orders (client_id, description, price, status, payment_status)
-            VALUES (?, ?, ?, ?, ?)
-        """, (client_id, description, price, WAITING_PAYMENT, "unpaid"))
-        await db.commit()
-        return cursor.lastrowid
 
 
 
@@ -166,18 +155,18 @@ async def handle_buyer_form(message: types.Message):
     if not state:
         return
 
-    await init_db() 
-    
+    service = state.get("service")
+
     order_id = await create_order(
-        client_id=message.from_user.id,
-        description=message.text,
-        price=1000
+        user_id=message.from_user.id,
+        username=get_user_display(message.from_user),
+        service=service,
+        text=message.text
     )
 
     await message.answer(
         f"Заказ #{order_id} создан\n"
-        f"Статус: {WAITING_PAYMENT}\n"
-        f"Сумма: 1000 сом"
+        f"Статус: {WAITING_PAYMENT}"
     )
 
     del user_state[message.from_user.id]
