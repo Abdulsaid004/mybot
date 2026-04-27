@@ -23,6 +23,8 @@ async def init_db():
 
 
 async def create_order(user_id, username, service, text):
+    await init_db()
+
     async with aiosqlite.connect(DB_PATH) as db:
         cursor = await db.execute("""
         INSERT INTO orders (user_id, username, service, text, status)
