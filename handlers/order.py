@@ -166,10 +166,11 @@ async def handle_buyer_form(message: types.Message):
 
     await message.answer(
         f"Заказ #{order_id} создан\n"
-        f"Статус: {WAITING_PAYMENT}"
+        f"Статус: waiting_payment"
     )
 
     del user_state[message.from_user.id]
+
 @router.message(
     lambda message: user_state.get(message.from_user.id, {}).get("step") == "seller_form"
 )
