@@ -5,6 +5,8 @@ DB_PATH = "/data/dealix.db" if os.path.exists("/data") else "dealix.db"
 
 
 async def init_db():
+    print("INIT_DB STARTED:", DB_PATH)
+    
     async with aiosqlite.connect(DB_PATH) as db:
         await db.execute("""
         CREATE TABLE IF NOT EXISTS orders (
