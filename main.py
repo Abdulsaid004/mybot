@@ -1,5 +1,6 @@
 import asyncio
 import os
+from dotenv import load_dotenv # type: ignore
 
 from aiogram import Bot, Dispatcher, types # type: ignore
 from aiogram.filters import CommandStart # type: ignore
@@ -8,10 +9,9 @@ from keyboards.main_kb import main_keyboard # type: ignore
 from handlers.order import router as order_router # type: ignore
 from handlers.db import init_db, save_executor_payment_info # type: ignore
 
+load_dotenv()
 
-
-
-BOT_TOKEN = "8099643683:AAGbB6QxDSU8-f0MLYSKkKgdzJ_34-LKcLM"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 
 async def main() -> None:
