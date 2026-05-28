@@ -6,15 +6,17 @@ from aiogram.filters import CommandStart # type: ignore
 
 from keyboards.main_kb import main_keyboard # type: ignore
 from handlers.order import router as order_router # type: ignore
-from handlers.db import init_db # type: ignore
+from handlers.db import init_db, save_executor_payment_info # type: ignore
 
 
-BOT_TOKEN = "ТВОЙ_ТОКЕН_СЮДА"
+
+
+BOT_TOKEN = "8099643683:AAGbB6QxDSU8-f0MLYSKkKgdzJ_34-LKcLM"
 
 
 async def main() -> None:
     # 1. Инициализация БД
-    await init_db()
+    init_db()
 
     # 2. Бот и диспетчер
     bot = Bot(token=BOT_TOKEN)
@@ -27,23 +29,27 @@ async def main() -> None:
     @dp.message(CommandStart())
     async def start(message: types.Message) -> None:
         await message.answer(
-            "Добро пожаловать в Dealix 🚀\n\n"
-            "Выберите свою роль:",
+            "👋 Добро пожаловать в Dealix\n\n"
+            "Здесь всё просто:\n\n"
+            "💼 Нужна услуга? — оставьте заказ\n"
+            "🛠 Есть навык? — сможете зарабатывать\n\n"
+            "Мы делаем работу удобнее и быстрее\n"
+            "без лишних действий и сложностей\n\n"
+            "🚀 Это только начало — мы строим новую платформу\n\n"
+            "👇 Выберите свою роль:",
             reply_markup=main_keyboard
         )
 
-    @dp.message(lambda message: message.chat.type in ["supergroup"])
-    async def debug_topic(message: types.Message):
-        print("CHAT ID:", message.chat.id)
-        print("THREAD ID:", message.message_thread_id)
-        print("TEXT:", message.text)
-
-    # ❗ ВАЖНО: только ОДИН запуск в самом конце
+    
     await dp.start_polling(bot)
+
+
 
 
 if __name__ == "__main__":
     asyncio.run(main())
 
+    
 
+     
 

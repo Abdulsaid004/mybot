@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  dealix:
+    build: .
+    container_name: dealix
+    restart: always
+    volumes:
+      - ./dealix.db:/app/dealix.db
+    env_file:
+      - .env
